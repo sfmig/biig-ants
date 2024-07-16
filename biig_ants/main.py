@@ -185,13 +185,15 @@ def main():
         0.0,
         math.pi,
         -math.pi / 2,
-    ]  # -1.5708]
+    ] 
 
     with bpy.context.temp_override(context="PARTICLES"):
         bpy.data.particles["ParticleSettings"].render_type = "OBJECT"
         bpy.data.particles[
             "ParticleSettings"
         ].instance_object = bpy.data.objects["Eleodes_spec"]
+        bpy.data.particles["ParticleSettings"].use_rotation_instance = True
+
 
     # Set up camera
 
