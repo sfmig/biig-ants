@@ -4,7 +4,6 @@
 # - make fns
 # - scale not working?
 
-
 import argparse
 import math
 import sys
@@ -111,26 +110,24 @@ def main():
     # Add emitter plane
     ###########################
     bpy.ops.mesh.primitive_plane_add(
-        size=2, 
-        enter_editmode=False, 
-        align='WORLD', 
-        scale=(0.5, 0.5, 0.5), #---why ignored?
+        size=2,
+        enter_editmode=False,
+        align="WORLD",
+        scale=(0.5, 0.5, 0.5),  # ---why ignored?
         location=(-1, 0, 1),  # m
-        rotation=(0, math.pi/2, 0),  # rad
+        rotation=(0, math.pi / 2, 0),  # rad
     )
-
 
     ###########################
     # Add particle system
     ###########################
     bpy.ops.object.particle_system_add()
-    bpy.data.particles["ParticleSettings"].physics_type = 'BOIDS'
+    bpy.data.particles["ParticleSettings"].physics_type = "BOIDS"
 
     # make this CLI / config params?
     bpy.data.particles["ParticleSettings"].count = 10
     bpy.data.particles["ParticleSettings"].lifetime = 200
     bpy.context.object.particle_systems["ParticleSystem"].seed = 42
-
 
     bpy.data.particles["ParticleSettings"].boids.use_land = True
     bpy.data.particles["ParticleSettings"].boids.use_flight = False
@@ -140,16 +137,23 @@ def main():
     with bpy.context.temp_override(particle_settings=settings):
         bpy.ops.boid.rule_del()  # probs there is a better way to do this
         bpy.ops.boid.rule_del()
-        bpy.ops.boid.rule_add(type='FOLLOW_LEADER')
+        bpy.ops.boid.rule_add(type="FOLLOW_LEADER")
+        # settings.rules["Follow Leader"].use_in_air = False
 
+    ###########################
     # Make a sphere lord
-
+    ###########################
+    bpy.ops.mesh.primitive_uv_sphere_add(
+        radius=1,
+        enter_editmode=False,
+        align="WORLD",
+        location=(1, 1, 0.25), #m 
+        scale=(.1, .1, .1),
+    )
 
     # Make boids be insects
 
-
     # Set up camera
-
 
     # Define render settings
 
