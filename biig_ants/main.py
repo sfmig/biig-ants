@@ -7,6 +7,7 @@
 import argparse
 import math
 import sys
+from pathlib import Path
 
 import addon_utils
 import bpy
@@ -107,6 +108,17 @@ def main():
     )
 
     ###########################
+    # Make a sphere lord
+    ###########################
+    bpy.ops.mesh.primitive_uv_sphere_add(
+        radius=1,
+        enter_editmode=False,
+        align="WORLD",
+        location=(1, 1, 0.25),  # m
+        scale=(0.1, 0.1, 0.1),
+    )
+
+    ###########################
     # Add emitter plane
     ###########################
     bpy.ops.mesh.primitive_plane_add(
@@ -121,7 +133,7 @@ def main():
     ###########################
     # Add particle system
     ###########################
-    bpy.ops.object.particle_system_add()
+    bpy.ops.object.particle_system_add()  # assumes emitter object is selected
     bpy.data.particles["ParticleSettings"].physics_type = "BOIDS"
 
     # make this CLI / config params?
@@ -133,25 +145,53 @@ def main():
     bpy.data.particles["ParticleSettings"].boids.use_flight = False
 
     # delete existing rules of boid brain
-    settings = bpy.data.particles["ParticleSettings"]
-    with bpy.context.temp_override(particle_settings=settings):
+    particle_settings = bpy.data.particles["ParticleSettings"]
+    with bpy.context.temp_override(particle_settings=particle_settings):
         bpy.ops.boid.rule_del()  # probs there is a better way to do this
         bpy.ops.boid.rule_del()
         bpy.ops.boid.rule_add(type="FOLLOW_LEADER")
-        # settings.rules["Follow Leader"].use_in_air = False
+
+    follow_rule = particle_settings.boids.states["State"].rules[
+        "Follow Leader"
+    ]
+    follow_rule.use_in_air = False
+    # set sphere as leader
+    follow_rule.object = bpy.data.objects["Sphere"]
 
     ###########################
-    # Make a sphere lord
+    # Add collision modifier to the landscape
     ###########################
-    bpy.ops.mesh.primitive_uv_sphere_add(
-        radius=1,
-        enter_editmode=False,
-        align="WORLD",
-        location=(1, 1, 0.25), #m 
-        scale=(.1, .1, .1),
-    )
+    # bpy.ops.object.select_all(action='DESELECT')
+    # bpy.data.objects["Landscape"].select_set(True)
+    bpy.context.view_layer.objects.active = bpy.data.objects["Landscape"]
+    with bpy.context.temp_override(context="PHYSICS"):
+        bpy.ops.object.modifier_add(type="COLLISION")
 
+    # settings = bpy.data.particles["ParticleSettings"]
+    # with bpy.context.temp_override(particle_settings=settings):
+    #     bpy.data.particles["ParticleSettings"].rules["Follow Leader"].object = bpy.data.objects["Sphere"]
+
+    ###########################
     # Make boids be insects
+    ###########################
+    eleodes_path = str(
+        Path(__file__).parents[2] / "data" / "Eleodes_spec_cleaned.fbx"
+    )
+    bpy.ops.import_scene.fbx(filepath=eleodes_path)
+
+    # rotate (hack to make bugs be upside down!)
+    bpy.data.objects["Eleodes_spec"].location = [0.0, 0.0, 0.0]
+    bpy.data.objects["Eleodes_spec"].rotation_euler = [
+        0.0,
+        math.pi,
+        -math.pi / 2,
+    ]  # -1.5708]
+
+    with bpy.context.temp_override(context="PARTICLES"):
+        bpy.data.particles["ParticleSettings"].render_type = "OBJECT"
+        bpy.data.particles[
+            "ParticleSettings"
+        ].instance_object = bpy.data.objects["Eleodes_spec"]
 
     # Set up camera
 
