@@ -2,7 +2,10 @@
 
 # TODO
 # - make fns
-# - add landscape seed as CLI argument
+
+
+import argparse
+import sys
 
 import addon_utils
 import bpy
@@ -43,7 +46,7 @@ def main():
         mesh_size=2,
         mesh_size_x=2,
         mesh_size_y=2,
-        random_seed=13,  # --------------- make this CLI argument
+        random_seed=args.landscape_seed,
         noise_offset_x=0,
         noise_offset_y=0,
         noise_offset_z=0,
@@ -104,4 +107,30 @@ def main():
 
 
 if __name__ == "__main__":
+    # get all arguments after '--' (all after -- are not read by blender)
+    argv = sys.argv
+    if "--" not in argv:
+        argv = []
+    else:
+        argv = argv[argv.index("--") + 1 :]
+
+    # Create parser object
+    usage_text = (
+        "Run blender in background mode with this script:"
+        "  blender --background --python " + __file__ + " -- [landscape_seed]"
+    )
+    parser = argparse.ArgumentParser(description=usage_text)
+
+    # Add optional argument: modules_path
+    parser.add_argument(
+        "--landscape_seed",
+        dest="landscape_seed",
+        metavar="LANDSCAPE_SEED",
+        default=42,
+        help="Seed to generate a random ridge landscape",
+    )
+
+    ## Parse arguments
+    args = parser.parse_args(argv)
+
     main()
