@@ -1,4 +1,4 @@
-# biig-ants
+# biig-ants 🪲🐜🦗🐞🪰🦗
 
 A silly project we ran as part of the [BIIG](https://www.ucl.ac.uk/lmcb/ucl-biig) Hackathon 2024.
 
@@ -19,8 +19,7 @@ The idea is that using Blender's passes we can easily generate synthetic trainin
 ## Data
 The script expects a bug mesh called `Eleodes_spec_cleaned.fbx` to located at a `data` directory, two-levels up from this file.  
 
-This mesh can be downloaded from: 
-https://drive.google.com/file/d/1E4XHMiHWTNKg5Kj-i_5Dfha8AeP1qZ9R/view?usp=drive_link
+This mesh can be downloaded from [this link](https://drive.google.com/file/d/1E4XHMiHWTNKg5Kj-i_5Dfha8AeP1qZ9R/view?usp=drive_link)
 
 The data comes from this cool paper:
 > Plum, F., & Labonte, D. (2021). scAnt—an open-source platform for the creation of 3D models of arthropods (and other small objects). PeerJ, 9, e11155.
