@@ -2,9 +2,11 @@
 
 # TODO
 # - make fns
+# - scale not working?
 
 
 import argparse
+import math
 import sys
 
 import addon_utils
@@ -104,6 +106,52 @@ def main():
         refresh=True,
         auto_refresh=True,
     )
+
+    ###########################
+    # Add emitter plane
+    ###########################
+    bpy.ops.mesh.primitive_plane_add(
+        size=2, 
+        enter_editmode=False, 
+        align='WORLD', 
+        scale=(0.5, 0.5, 0.5), #---why ignored?
+        location=(-1, 0, 1),  # m
+        rotation=(0, math.pi/2, 0),  # rad
+    )
+
+
+    ###########################
+    # Add particle system
+    ###########################
+    bpy.ops.object.particle_system_add()
+    bpy.data.particles["ParticleSettings"].physics_type = 'BOIDS'
+
+    # make this CLI / config params?
+    bpy.data.particles["ParticleSettings"].count = 10
+    bpy.data.particles["ParticleSettings"].lifetime = 200
+    bpy.context.object.particle_systems["ParticleSystem"].seed = 42
+
+
+    bpy.data.particles["ParticleSettings"].boids.use_land = True
+    bpy.data.particles["ParticleSettings"].boids.use_flight = False
+
+    # delete existing rules of boid brain
+    settings = bpy.data.particles["ParticleSettings"]
+    with bpy.context.temp_override(particle_settings=settings):
+        bpy.ops.boid.rule_del()  # probs there is a better way to do this
+        bpy.ops.boid.rule_del()
+        bpy.ops.boid.rule_add(type='FOLLOW_LEADER')
+
+    # Make a sphere lord
+
+
+    # Make boids be insects
+
+
+    # Set up camera
+
+
+    # Define render settings
 
 
 if __name__ == "__main__":
