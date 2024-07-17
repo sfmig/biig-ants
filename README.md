@@ -25,7 +25,7 @@ The data comes from this cool paper:
 > Plum, F., & Labonte, D. (2021). scAnt—an open-source platform for the creation of 3D models of arthropods (and other small objects). PeerJ, 9, e11155.
 
 ## Contributors
-This project was done in collaboration with @K-Meech, @ruaridhg and @WhoIsJack, thanks for all the great contributions!
+This project was done in collaboration with [@K-Meech](https://github.com/K-Meech), [@ruaridhg](https://github.com/ruaridhg) and [@WhoIsJack](https://github.com/WhoIsJack), thanks for all the great contributions!
 
 ## Inspo
 - This very cool piece of work https://github.com/evo-biomech/replicAnt
