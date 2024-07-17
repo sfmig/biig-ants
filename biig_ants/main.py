@@ -167,10 +167,6 @@ def main():
     with bpy.context.temp_override(context="PHYSICS"):
         bpy.ops.object.modifier_add(type="COLLISION")
 
-    # settings = bpy.data.particles["ParticleSettings"]
-    # with bpy.context.temp_override(particle_settings=settings):
-    #     bpy.data.particles["ParticleSettings"].rules["Follow Leader"].object = bpy.data.objects["Sphere"]
-
     ###########################
     # Make boids be insects
     ###########################
@@ -185,7 +181,7 @@ def main():
         0.0,
         math.pi,
         -math.pi / 2,
-    ] 
+    ]
 
     with bpy.context.temp_override(context="PARTICLES"):
         bpy.data.particles["ParticleSettings"].render_type = "OBJECT"
@@ -193,7 +189,6 @@ def main():
             "ParticleSettings"
         ].instance_object = bpy.data.objects["Eleodes_spec"]
         bpy.data.particles["ParticleSettings"].use_rotation_instance = True
-
 
     # Set up camera
 

@@ -17,7 +17,7 @@ The next steps would be to define a virtual camera that looks to the particle sy
 The idea is that using Blender's passes we can easily generate synthetic training data for segmentation, optic flow estimation or tracking (but we didn't get that far).
 
 ## Data
-The script expects a bug mesh called `Eleodes_spec_cleaned.fbx` to located at a `data` directory, two-levels up from this file.  
+The script expects a bug mesh called `Eleodes_spec_cleaned.fbx` to located at a `data` directory, two-levels up from this file.
 
 This mesh can be downloaded from [this link](https://drive.google.com/file/d/1E4XHMiHWTNKg5Kj-i_5Dfha8AeP1qZ9R/view?usp=drive_link)
 
@@ -28,5 +28,5 @@ The data comes from this cool paper:
 This project was done in collaboration with @K-Meech, @ruaridhg and @WhoIsJack, thanks for all the great contributions!
 
 ## Inspo
-- This very cool piece of work https://github.com/evo-biomech/replicAnt 
+- This very cool piece of work https://github.com/evo-biomech/replicAnt
 - Some snippets from https://github.com/sfmig/hawk-eyes
